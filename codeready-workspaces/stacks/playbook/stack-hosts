@@ -4,7 +4,7 @@ stack ansible_connection=local
 stack
 
 [npm-ansible-mongo:vars]
-cr_sso_url=https://keycloak.rht-labs.com/auth/realms/codeready/protocol/openid-connect/token
-cr_host_url=https://codeready.rht-labs.com 
-cr_user=your_codeready_user_with_admin_rights
-cr_password=your_codeready_password
+cr_host_url="https://codeready-do500-workspaces.apps.boston-bcf4.gpte.rht-labs.com"
+cr_sso_url="https://keycloak-do500-workspaces.apps.boston-bcf4.gpte.rht-labs.com/auth/realms/codeready/protocol/openid-connect/token"
+cr_user="admin"
+cr_password="admin"

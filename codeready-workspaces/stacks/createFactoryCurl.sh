@@ -16,21 +16,16 @@ export TKN=$(curl -X POST "${KEYCLOAK_URL}/realms/${KEYCLOAK_REALM}/protocol/ope
  -d 'grant_type=password' \
  -d 'client_id=admin-cli' | jq -r '.access_token')
 
-export STACK_ID=$(curl -v -X POST "${CODEREADY_API}/stack" \
+export FACT_ID=$(curl -vvv -X POST "${CODEREADY_API}/factory" \
 --header 'Content-Type: application/json' \
 --header 'Accept: application/json' \
 --header "Authorization: Bearer $TKN" \
---data-binary "@do500-raw-config.json" | jq -r '.id')
+--data-binary "@do500-factory.json" | jq -r '.links')
 
-if [ ! -z "$STACK_ID" ]
+if [ ! -z "$FACT_ID" ]
 then
-  echo "Stack Id $STACK_ID"
-  curl -X POST "${CODEREADY_API}/permissions" \
-  --header 'Content-Type: application/json' \
-  --header 'Accept: application/json' \
-  --header "Authorization: Bearer $TKN" \
-  -d "{ \"userId\": \"*\", \"domainId\": \"stack\", \"instanceId\": \"$STACK_ID\", \"actions\": [ \"read\", \"search\" ] }"
+  echo "Factory Create URL $FACT_ID"
 else
-  echo "Stack not created"
+  echo "Factory not created"
 fi
 

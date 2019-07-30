@@ -12,7 +12,7 @@
       register: token_response
       tags: npm-stack
 
-    - name: Create NPM Ansible Mongo Stack
+    - name: Create Stack
       uri: 
         url: "{{ cr_host_url }}/api/stack"
         method: POST
@@ -38,3 +38,18 @@
           Authorization: "Bearer {{ token_response.json.access_token }}"
       tags: npm-stack
 
+    - name: Create Factory
+      uri: 
+        url: "{{ cr_host_url }}/api/factory"
+        method: POST
+        status_code: 200
+        body: "{{ lookup('file', '../do500-factory.json') }}"
+        body_format: json
+        headers:
+          Authorization: "Bearer {{ token_response.json.access_token }}"
+      register: factory_response
+      tags: npm-stack  
+      
+    - debug: 
+        msg: "{{ factory_response.json.links }}"      
+  
