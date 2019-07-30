@@ -18,12 +18,33 @@ items:
         spec:
           containers:
             -
-              image: quay.io/mcanoy/stacks-node-rhel8-ansible:latest
+              image: quay.io/rht-labs/stacks-node-rhel7-ansible:latest
               name: main
               ports:
               -
                 containerPort: 8080
                 protocol: TCP
+              -
+                containerPort: 4200
+                protocol: TCP
+              -
+                containerPort: 4444
+                protocol: TCP
+              -
+                containerPort: 8081
+                protocol: TCP
+              -
+                containerPort: 8082
+                protocol: TCP
+              -
+                containerPort: 8083
+                protocol: TCP
+              -
+                containerPort: 8084
+                protocol: TCP
+              -
+                containerPort: 9000
+                protocol: TCP                                                                                
             -
               image: mongodb:latest
               name: main-mongo

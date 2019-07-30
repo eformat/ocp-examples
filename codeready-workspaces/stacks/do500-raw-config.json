@@ -2,96 +2,83 @@
   "creator": "a4310588-1d17-4f2d-9b5e-d2119d4f2291",
   "tags": [],
   "workspaceConfig": {
-    "projects": [],
-    "commands": [
-      {
-        "commandLine": "cd /projects/todolist-fe && npm run serve",
-        "name": "fe-start",
-        "type": "custom",
-        "attributes": {
-          "previewUrl": "${server.fe-8080}"
-        }
-      },
-      {
-        "commandLine": "cd /projects/todolist-api && npm start",
-        "name": "api-start",
-        "type": "custom",
-        "attributes": {
-          "previewUrl": "${server.api-9000}/api/todos"
-        }
-      },
-      {
-        "commandLine": "sed -i 's@\".*\"@\\\"'\"${server.api-9000}\"'/api/todos\\\"@' /projects/todolist-fe/src/config/index.js && echo \"done\"",
-        "name": "fe-fix-ap-url",
-        "type": "custom",
-        "attributes": {}
-      },
-      {
-        "commandLine": "cd /projects && git clone https://github.com/RedHatTraining/rht-labs-todolist-api.git todolist-api && cd todolist-api && ./git-pull-all.sh && git checkout develop && npm i && echo \"done\"",
-        "name": "init-api",
-        "type": "custom",
-        "attributes": {}
-      },
-      {
-        "commandLine": "cd /projects && git clone https://github.com/RedHatTraining/rht-labs-todolist-fe.git todolist-fe && cd todolist-fe && ./git-pull-all.sh && git checkout develop && sed -i 's/4.7.2/4.12.0/g' package.json && npm i && echo \"done\"",
-        "name": "init-fe",
-        "type": "custom",
-        "attributes": {}
-      }
-    ],
+    "commands": [],
     "defaultEnv": "default",
     "environments": {
       "default": {
         "recipe": {
-          "contentType": "text/x-yaml",
-          "type": "openshift",
-          "content": "kind: List\nitems:\n - \n  apiVersion: apps/v1\n  kind: Deployment\n  metadata:\n   name: my-deployment\n  spec:\n   replicas: 1\n   selector:\n    matchLabels:\n     my-workspace-pod: dev\n   template:\n    metadata:\n     name: dev-pod\n     labels:\n      my-workspace-pod: dev\n    spec:\n     containers:\n      - \n       image: 'quay.io/mcanoy/stacks-node-rhel8-ansible:latest'\n       name: main\n       ports:\n        - \n         containerPort: 8080\n         protocol: TCP\n      - \n       image: 'mongo:latest'\n       name: main-mongo\n       ports:\n        - \n         containerPort: 27017\n         protocol: TCP\n - \n  kind: Service\n  apiVersion: v1\n  metadata:\n   name: my-service\n  spec:\n   selector:\n    name: app\n   ports:\n    - \n     protocol: TCP\n     port: 8080\n     targetPort: 8080\n"
+          "type": "dockerimage",
+          "content": "quay.io/rht-labs/stacks-node-rhel7-ansible:latest"
         },
         "machines": {
-          "dev-pod/main-mongo": {
-            "servers": {},
+          "dev-pod/main": {
+            "servers": {
+              "ide-8080": {
+                "protocol": "http",
+                "port": "8080",
+                "attributes": {}
+              },
+              "ide-9000": {
+                "protocol": "http",
+                "port": "9000",
+                "attributes": {}
+              },
+              "ide-3000": {
+                "protocol": "http",
+                "port": "3000",
+                "attributes": {}
+              },
+              "ide-4200": {
+                "protocol": "http",
+                "port": "4200",
+                "attributes": {}
+              },
+              "ide-4444": {
+                "protocol": "http",
+                "port": "4444",
+                "attributes": {}
+              },
+              "ide-8081": {
+                "protocol": "http",
+                "port": "8081",
+                "attributes": {}
+              },
+              "ide-8082": {
+                "protocol": "http",
+                "port": "8082",
+                "attributes": {}
+              },
+              "ide-8083": {
+                "protocol": "http",
+                "port": "8083",
+                "attributes": {}
+              },
+              "ide-8084": {
+                "protocol": "http",
+                "port": "8084",
+                "attributes": {}
+              }
+            },
             "volumes": {
-              "dbdata": {
-                "path": "/data/db"
+              "projects": {
+                "path": "/projects"
               }
             },
             "installers": [],
             "env": {},
             "attributes": {
-              "memoryLimitBytes": "2147483648"
-            }
-          },
-          "dev-pod/main": {
-            "servers": {
-              "fe-8080": {
-                "protocol": "http",
-                "port": "8080",
-                "attributes": {}
-              },
-              "api-9000": {
-                "protocol": "http",
-                "port": "9000",
-                "attributes": {}
-              }
-            },
-            "volumes": {},
-            "installers": [
-              "org.eclipse.che.ws-agent",
-              "org.eclipse.che.terminal",
-              "org.eclipse.che.exec",
-              "org.eclipse.che.git-credentials",
-              "org.eclipse.che.ls.vue"
-            ],
-            "env": {},
-            "attributes": {
-              "memoryLimitBytes": "2147483648"
+              "memoryLimitBytes": "4294967296"
             }
           }
         }
       }
     },
+    "projects": [],
     "name": "default",
-    "attributes": {},
+    "attributes": {
+      "editor": "org.eclipse.che.editor.theia:next",
+      "plugins": "che-machine-exec-plugin:0.0.1,ms-vscode.node-debug2:1.31.6,redhat.vscode-yaml:0.4.0,redhat.vscode-openshift-connector:0.0.19"
+    },
     "links": []
   },
   "components": [
@@ -113,6 +100,6 @@
     }
   ],
   "scope": "general",
-  "description": "DO500 NPM Ansible Mongo",
-  "name": "NPM-Ansible-Mongo"
+  "description": "DO500 Stack",
+  "name": "DO500-stack"
 }
