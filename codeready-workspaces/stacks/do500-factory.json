@@ -75,15 +75,15 @@
     "projects": [
       {
         "links": [],
-        "name": "todolist",
+        "name": "do500-blank-repo",
         "attributes": {},
         "type": "blank",
         "source": {
-          "location": "https://github.com/springdo/todolist.git",
+          "location": "https://github.com/eformat/do500-blank-repo.git",
           "type": "git",
           "parameters": {}
         },
-        "path": "/todolist",
+        "path": "/do500-blank-repo",
         "problems": [],
         "mixins": [
           "git"
